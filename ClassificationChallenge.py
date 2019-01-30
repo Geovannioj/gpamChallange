@@ -22,3 +22,37 @@ print(dataset.head(20))
 print(dataset.describe())
 print(dataset.groupby('review_score').size())
 
+#check data distribution
+# dataset.hist()
+# plt.show()
+
+#validation dataset
+
+array = dataset.values
+# print(array[3,2:5])
+X = array[:,0:6]
+Y = array[:,4]
+validation_size = 0.3
+seed = 5
+
+X_train, 
+X_validation, 
+Y_train, 
+Y_validation = model_selection.train_test_split(X,
+                                                Y,
+                                                test_size=validation_size,
+                                                 random_state=seed)
+
+#Test options 
+scoring = 'accuracy'
+seed = 5
+
+#Check different algorithms
+
+models =[]
+models.append(('LR', LogisticRegression()))
+models.append(('LDA', LinearDiscriminantAnalysis()))
+models.append(('KNN', KNeighborsClassifier()))
+models.append(('CART', DecisionTreeClassifier()))
+models.append(('NB', GaussianNB()))
+models.append(('SVM', SVC()))
