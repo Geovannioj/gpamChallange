@@ -1,10 +1,11 @@
 import scipy
-import numpy
+import numpy as np
 import math
 import matplotlib.pyplot as plt
 import pandas as pd
 from pandas.plotting import scatter_matrix
 from sklearn import model_selection
+from sklearn.impute import SimpleImputer
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
@@ -17,15 +18,13 @@ from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 
 #load data GPAM_Challenge dataset 
-dataset = pd.read_csv('olist_order_reviews_dataset.csv')
+dataset = pd.read_csv('olist_order_reviews_dataset.csv') 
+dataset = dataset.fillna('')
 
-# dataset.review_score = dataset.review_score.astype(int)
-# dataset.review_comment_message = str(dataset.review_comment_message.astype(str)
-
-# print(dataset.shape)
-# print(dataset.head(20))
-# print(dataset.describe())
-# print(dataset.groupby('review_score').size())
+print(dataset.shape)
+print(dataset.head(10))
+print(dataset.describe())
+print(dataset.groupby('review_score').size())
 
 #check data distribution
 # dataset.hist()
@@ -37,16 +36,6 @@ array = dataset.values
 
 # split comments column
 X = array[:,4] 
-X_str
-
-#take out the null instances of comments
-for comment in X:
-    if isinstance(comment, str):
-        X_str.append(comment.lower())
-    else: 
-        str(comment)
-        comment = ""
-        X_str.append(comment)
 
 #split rating column
 Y = array[:,2]
@@ -58,10 +47,10 @@ validation_size = 0.3
 seed = 5
 
 # Vectorizer to split text
-# vectorizer = TfidfVectorizer(ngram_range=(1,2))
+vectorizer = TfidfVectorizer(ngram_range=(1,2))
 # x_vectorized = vectorizer.fit_transform(X)
 
-# #split the datset between train and validation
+#split the datset between train and validation
 # X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(X,
 #                                                 Y,
 #                                                 test_size=validation_size,
